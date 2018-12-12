@@ -40,26 +40,32 @@ public class PcsClient {
 	public static final String client_id = "ZQT9cHv758TzQqBSrTtMESRI";
 	public static final String client_secret = "MVz18SI2seyCucSRBAweuvPz61eaUsFP";
 
-	private String accessToken = "26.18c794e003651f01d7241c2720af7f05.2592000.1529419563.3442166296-1866274";
 	// 一个月
-	private String refreToken = "27.921e43d1f4d5efa978b281e47f18a334.315360000.1842187563.3442166296-1866274";
+	private String accessToken = "26.4befd346958a4665f5eb591c06c0561c.2592000.1547177071.3442166296-1866274";
 	// 十年
+	private String refreToken = "27.a1419982e650f8edb0887f714818b8be.315360000.1859945071.3442166296-1866274";
+
 	private String appRoot = "";
 	private HttpHelper httpHelper = new HttpHelper();
 
 	public PcsClient() {
+		// 第一步 获取验证 并且输入验证码
+		// https://openapi.baidu.com/oauth/2.0/device/code?client_id=ZQT9cHv758TzQqBSrTtMESRI&response_type=device_code&scope=basic,netdisk
+		// 第二步 获取acctoken
+		// https://openapi.baidu.com/oauth/2.0/token?grant_type=device_token&code=0052c712427f47fb4b271ed0c41868d4&client_id=ZQT9cHv758TzQqBSrTtMESRI&client_secret=MVz18SI2seyCucSRBAweuvPz61eaUsFP
+		// 第三步 根据refreToken重复刷新accessToken
+		// 27.a1419982e650f8edb0887f714818b8be.315360000.1859945071.3442166296-1866274
 	}
 
 	public static void main(String[] args) throws RestHttpException, HttpException, ParseException, PcsException {
-		PcsClient pcs = new PcsClient();
-		System.out.println(pcs.quota().toString());
+		System.out.println(dao.quota().toString());
 		String remote = "/apps/tms/file/res";
-		List<PcsFileEntry> list = pcs.list(remote);
+		List<PcsFileEntry> list = dao.list(remote);
 		for (PcsFileEntry file : list) {
 			if (file.isDir() == false) {
 				System.out.println("/home/mjy/Desktop/" + file.getServerFilename());
 				System.out.println(remote + file.getPath());
-				pcs.downloadToFile(file.getPath(), "/home/mjy/Desktop/" + file.getServerFilename());
+				dao.downloadToFile(file.getPath(), "/home/mjy/Desktop/" + file.getServerFilename());
 			}
 		}
 	}
@@ -67,7 +73,7 @@ public class PcsClient {
 	public void getToken() throws RestHttpException, HttpException, ParseException {
 		// 设备获取方式 一个月token 十年refetoken
 		String aaa = "";
-		String url = "https://openapi.baidu.com/oauth/2.0/token?grant_type=device_token&code=7ebaa6ebae9dfa633cc21483f57e5d8e&client_id=ZQT9cHv758TzQqBSrTtMESRI&client_secret=MVz18SI2seyCucSRBAweuvPz61eaUsFP";
+		String url = "https://openapi.baidu.com/oauth/2.0/token?grant_type=device_token&code=0052c712427f47fb4b271ed0c41868d4&client_id=ZQT9cHv758TzQqBSrTtMESRI&client_secret=MVz18SI2seyCucSRBAweuvPz61eaUsFP";
 		// String aa =
 		// "https://openapi.baidu.com/oauth/2.0/token?grant_type=refresh_token&refresh_token="
 		// + refreToken
