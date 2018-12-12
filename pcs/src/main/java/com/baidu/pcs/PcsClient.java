@@ -55,6 +55,9 @@ public class PcsClient {
 		// https://openapi.baidu.com/oauth/2.0/token?grant_type=device_token&code=0052c712427f47fb4b271ed0c41868d4&client_id=ZQT9cHv758TzQqBSrTtMESRI&client_secret=MVz18SI2seyCucSRBAweuvPz61eaUsFP
 		// 第三步 根据refreToken重复刷新accessToken
 		// 27.a1419982e650f8edb0887f714818b8be.315360000.1859945071.3442166296-1866274
+		// "https://openapi.baidu.com/oauth/2.0/token?grant_type=refresh_token&refresh_token="
+		// + refreToken
+		// + "&client_id=" + client_id + "&client_secret=" + client_secret + "";
 	}
 
 	public static void main(String[] args) throws RestHttpException, HttpException, ParseException, PcsException {
